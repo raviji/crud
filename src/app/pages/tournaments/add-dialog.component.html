@@ -1,0 +1,67 @@
+<form [formGroup]="addTourney" (ngSubmit)="onSubmit(addTourney)">
+<h1 class="display-6" mat-dialog-title>Add Tournament</h1>
+<div mat-dialog-content>
+
+
+            <div class="row">
+              <div class="col-6">
+                  <mat-form-field class="addTourneyInput">
+                    <input matInput placeholder="Title" formControlName="title">
+                  </mat-form-field>
+              </div>
+              <div class="col-6">
+                  <mat-form-field class="addTourneyInput">
+                    <input matInput placeholder="Sub Title" formControlName="subTitle">
+                  </mat-form-field>
+              </div>
+              <div class="col-6">
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="eventDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+              </div>
+              <div class="col-6">
+                <mat-form-field class="addTourneyInput">
+                  <input type="text" placeholder="Select Type" aria-label="Type" matInput formControlName="type" [matAutocomplete]="auto1">
+                  <mat-autocomplete #auto1="matAutocomplete">
+                    <mat-option *ngFor="let item of tTypes" [value]="item">
+                      {{item}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+              <div class="col-6">
+                <mat-form-field class="addTourneyInput">
+                  <input type="text" placeholder="City" aria-label="City" matInput formControlName="city" [matAutocomplete]="auto">
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of cities" [value]="option">
+                      {{option}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+              <div class="col-6">
+                  <label class="btn btn-default"> Choose Poster:
+                      <input type="file" (change)="selectFile($event)">
+                    </label>
+              </div>
+
+            </div>
+
+
+
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="" cdkFocusInitial>Close</button>
+  <button mat-button [disabled]="!selectedFiles">Submit</button>
+</div>
+<div *ngIf="currentFileUpload" class="progress">
+    <div class="progress-bar progress-bar-info progress-bar-striped"
+      role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
+      aria-valuemin="0" aria-valuemax="100"
+      [ngStyle]="{width:progress.percentage+'%'}">
+      {{progress.percentage}}%</div>
+  </div>
+</form>
