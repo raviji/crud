@@ -59,6 +59,7 @@ import { EventsComponent } from './events/events.component';
 import { TournamentsComponent, AppAddDialogComponent } from './pages/tournaments/tournaments.component';
 import { PlayersComponent } from './pages/players/players.component';
 import { SharedModule } from './shared/shared.module';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 // import { PagesModule } from './pages/pages.module';
 
 
@@ -120,12 +121,16 @@ import { SharedModule } from './shared/shared.module';
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
-    // PagesModule,
     AngularFireModule.initializeApp(environment.firebase, {databaseURL: 'https://rscs-5d73d.firebaseio.com'}),
     AngularFireDatabaseModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }), // for database
   ],
-  providers: [AngularFirestore, AuthService, AngularFireAuth],
+  providers: [
+    AngularFirestore,
+    AuthService,
+    AngularFireAuth,
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
