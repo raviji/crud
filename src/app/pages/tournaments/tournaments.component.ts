@@ -3,6 +3,7 @@ import { map } from 'rxjs/operators';
 import { UploadFileService, FileUpload } from 'src/app/services/upload.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-tournaments',
@@ -22,13 +23,16 @@ export class TournamentsComponent implements OnInit {
   selectedFuture: any;
   selectedtTypes: any;
   selectedCity: any;
-  constructor(private uploadService: UploadFileService, public dialog: MatDialog) {
+  constructor(private uploadService: UploadFileService, public dialog: MatDialog, private spinner: NgxSpinnerService) {
     this.selectedFuture = this.future[0];
     this.selectedtTypes = this.tTypes[2];
     this.selectedCity   = this.cities[0];
+    alert("loading");
+    this.spinner.show();
    }
 
   ngOnInit() {
+    this.spinner.show();
   //   this.myForm = this.fb.group({
   //     title: [''],
   //     subTitle: [''],
@@ -42,6 +46,7 @@ export class TournamentsComponent implements OnInit {
       )
     ).subscribe((fileUploads: any) => {
       this.fileUploads = fileUploads;
+      this.spinner.hide();
       console.log('firebase:', this.fileUploads);
     });
   }
@@ -100,11 +105,13 @@ export class AppAddDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AppAddDialogComponent>,
     public fb: FormBuilder,
+    private spinner: NgxSpinnerService,
     private uploadService: UploadFileService
     ) {
       // console.log(this._datas);
       }
     ngOnInit() {
+      // this.spinner.show();
       this.addTourney = this.fb.group({
         title: [''],
         subTitle: [''],
@@ -138,6 +145,7 @@ export class AppAddDialogComponent implements OnInit {
   }
 
   onSubmit(obj: any) {
+    this.spinner.show();
     const file = this.selectedFiles.item(0);
     this.selectedFiles = undefined;
     this.currentFileUpload = new FileUpload(file);
@@ -145,5 +153,6 @@ export class AppAddDialogComponent implements OnInit {
     obj.value.eventDate = obj.value.eventDate.toString();
     this.uploadService.pushFileToStorage(this.currentFileUpload, obj.value, this.progress);
     this.dialogRef.close();
+    this.spinner.hide();
   }
 }

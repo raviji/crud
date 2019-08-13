@@ -4,24 +4,24 @@
 
 
             <div class="row">
-              <div class="col-6">
+              <div class="col-sm">
                   <mat-form-field class="addTourneyInput">
                     <input matInput placeholder="Title" formControlName="title">
                   </mat-form-field>
               </div>
-              <div class="col-6">
+              <div class="col-sm">
                   <mat-form-field class="addTourneyInput">
                     <input matInput placeholder="Sub Title" formControlName="subTitle">
                   </mat-form-field>
               </div>
-              <div class="col-6">
+              <div class="col-sm">
                   <mat-form-field>
                     <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="eventDate">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
               </div>
-              <div class="col-6">
+              <div class="col-sm">
                 <mat-form-field class="addTourneyInput">
                   <input type="text" placeholder="Select Type" aria-label="Type" matInput formControlName="type" [matAutocomplete]="auto1">
                   <mat-autocomplete #auto1="matAutocomplete">
@@ -31,7 +31,7 @@
                   </mat-autocomplete>
                 </mat-form-field>
               </div>
-              <div class="col-6">
+              <div class="col-sm">
                 <mat-form-field class="addTourneyInput">
                   <input type="text" placeholder="City" aria-label="City" matInput formControlName="city" [matAutocomplete]="auto">
                   <mat-autocomplete #auto="matAutocomplete">
@@ -41,8 +41,8 @@
                   </mat-autocomplete>
                 </mat-form-field>
               </div>
-              <div class="col-6">
-                  <label class="btn btn-default"> Choose Poster:
+              <div class="col-sm">
+                  <label class="btn btn-default"> 
                       <input type="file" (change)="selectFile($event)" accept="image/*">
                     </label>
               </div>

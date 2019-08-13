@@ -7,3 +7,6 @@ mat-grid-tile {
 .addTourneyInput{
   width: 100%;
 }
+.listOfEvents .col-sm{
+  margin-bottom:20px;
+}
