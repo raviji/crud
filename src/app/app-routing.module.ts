@@ -9,58 +9,36 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './core/security/auth.guard';
 import { TournamentsComponent } from './pages/tournaments/tournaments.component';
 import { PlayersComponent } from './pages/players/players.component';
+import { UserResolver } from './core/security/user.resolver';
 
-    const routes: Routes = [
-      { path: '', redirectTo: 'tournaments', pathMatch: 'full' },
-      {
-          path: 'home',
-          component: DashboardComponent,
-          // canActivate: [ AuthGuard ]
-      },
-      {
-          path: 'videos',
-          component: VideosComponent,
-      },
+export const rootRouterConfig: Routes = [
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
+      { path: 'home', component: DashboardComponent, resolve: { data: UserResolver} },
+      { path: 'videos', component: VideosComponent, resolve: { data: UserResolver} },
       {
           path: 'people',
-          component: ContributorsComponent
+          component: ContributorsComponent,
+        //   canActivate: [ AuthGuard ]
       },
       {
           path: 'share',
-          component: CourtShareComponent
+          component: CourtShareComponent,
+        //   canActivate: [ AuthGuard ]
       },
       {
         path: 'tournaments',
-        component: TournamentsComponent
+        component: TournamentsComponent,
+        // canActivate: [ AuthGuard ]
       },
       {
         path: 'players',
-        component: PlayersComponent
+        component: PlayersComponent,
+        // canActivate: [ AuthGuard ]
       },
-      { path: 'login', component: LoginComponent },
       {
           path: '**',
           // redirectTo:'home',
           component: NotFoundComponent
       }
-    ];
-
-    @NgModule({
-        imports: [
-            RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})
-        ],
-        exports: [
-            RouterModule
-        ],
-        declarations: []
-    })
-    export class AppRoutingModule { }
-
-    export const AppRoutingComponents = [
-        DashboardComponent,
-        ContributorsComponent,
-        CourtShareComponent,
-        NotFoundComponent,
-        AppShareDataDialogComponent,
-        VideosComponent
     ];

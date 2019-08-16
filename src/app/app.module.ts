@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { AppRoutingModule, AppRoutingComponents } from './app-routing.module';
+import { rootRouterConfig } from './app-routing.module';
 import { YoutubePlayerModule } from 'ngx-youtube-player';
 import {
   MatAutocompleteModule,
@@ -47,7 +47,7 @@ import {
   MatTreeModule
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { AppShareDataDialogComponent } from './dashboard/dashboard.component';
+import { AppShareDataDialogComponent, DashboardComponent } from './dashboard/dashboard.component';
 import { MyFilterPipe } from './pipes/filter.pipe';
 import { SafeUrlPipe } from './core/security/safe-url.pipe';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -58,17 +58,36 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { EventsComponent } from './events/events.component';
 import { TournamentsComponent, AppAddDialogComponent } from './pages/tournaments/tournaments.component';
 import { PlayersComponent } from './pages/players/players.component';
-import { SharedModule } from './shared/shared.module';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { UserService } from './core/user.service';
+import { AuthGuard } from './core/security/auth.guard';
+import { UserResolver } from './core/security/user.resolver';
+import { RouterModule } from '@angular/router';
+import { ContributorsComponent } from './contributors/contributors.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { CourtShareComponent } from './court-share/court-share.component';
+import { VideosComponent } from './videos/videos.component';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 // import { PagesModule } from './pages/pages.module';
-
+ //     DashboardComponent,
+    //     ContributorsComponent,
+    //     CourtShareComponent,
+    //     NotFoundComponent,
+    //     AppShareDataDialogComponent,
+    //     VideosComponent
 
 @NgModule({
   declarations: [
     AppComponent,
-    AppRoutingComponents,
     MyFilterPipe,
     SafeUrlPipe,
+    DashboardComponent,
+    ContributorsComponent,
+    CourtShareComponent,
+    NotFoundComponent,
+    AppShareDataDialogComponent,
+    VideosComponent,
     LoginComponent,
     EventsComponent,
     TournamentsComponent,
@@ -84,7 +103,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule,
+    // AppRoutingModule,
     // shared module
     MatAutocompleteModule,
     MatBadgeModule,
@@ -121,14 +140,17 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
+    RouterModule.forRoot(rootRouterConfig, { useHash: true }),
     AngularFireModule.initializeApp(environment.firebase, {databaseURL: 'https://rscs-5d73d.firebaseio.com'}),
+    AngularFirestoreModule, // imports firebase/firestore, only needed for database features
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     AngularFireDatabaseModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }), // for database
   ],
   providers: [
     AngularFirestore,
     AuthService,
-    AngularFireAuth,
+    AngularFireAuth, UserService, AuthGuard, UserResolver,
     { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
   bootstrap: [AppComponent]

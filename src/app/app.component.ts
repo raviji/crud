@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
       this.drawer.close();
     }
     logout() {
-      this.auth.logout();
+      this.auth.doLogout();
     }
 }
 
